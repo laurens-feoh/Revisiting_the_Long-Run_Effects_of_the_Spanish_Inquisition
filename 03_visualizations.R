@@ -97,11 +97,11 @@ extract_paper_stats <- function(model, treatment_var) {
   se    <- ct[treatment_var, "Std. Error"]
   tstat <- est / se
   pval  <- 2 * (1 - pnorm(abs(tstat)))
-
+  
   stars <- ifelse(pval < 0.01, "***",
                   ifelse(pval < 0.05, "**",
                          ifelse(pval < 0.1,  "*", "")))
-
+  
   list(
     coef  = sprintf("%.3f%s", est, stars),
     tstat = sprintf("(%.2f)", tstat),
@@ -242,25 +242,25 @@ var_labels <- c(
 # CEM balance (manual — cem package doesn't expose pre/post means directly)
 cem_data_matched <- data %>% filter(cem_w > 0)
 cem_data_all     <- data %>% filter(!is.na(impacthigh) &
-                                    if_all(all_of(cem_vars), ~ !is.na(.)))
+                                      if_all(all_of(cem_vars), ~ !is.na(.)))
 
 compute_cem_balance <- function(var) {
   tr_all  <- cem_data_all     %>% filter(impacthigh == 1) %>% pull(!!var)
   co_all  <- cem_data_all     %>% filter(impacthigh == 0) %>% pull(!!var)
   tr_post <- cem_data_matched %>% filter(impacthigh == 1) %>% pull(!!var)
   co_post <- cem_data_matched %>% filter(impacthigh == 0) %>% pull(!!var)
-
+  
   mean_tr      <- mean(tr_all, na.rm = TRUE)
   mean_co_pre  <- mean(co_all, na.rm = TRUE)
   mean_co_post <- mean(co_post, na.rm = TRUE)
   sd_tr        <- sd(tr_all, na.rm = TRUE)
-
+  
   sdiff_pre  <- 100 * (mean_tr - mean_co_pre)  / sd_tr
   sdiff_post <- 100 * (mean_tr - mean_co_post) / sd_tr
-
+  
   t_pre  <- tryCatch(t.test(tr_all, co_all)$p.value,   error = function(e) NA)
   t_post <- tryCatch(t.test(tr_post, co_post)$p.value, error = function(e) NA)
-
+  
   tibble(
     variable   = var_labels[var],
     mean_tr    = sprintf("%.2f", mean_tr),
@@ -381,7 +381,7 @@ quantile_plot <- ggplot(qte_results, aes(x = tau)) +
   geom_hline(yintercept = 0,        linetype = "solid",  color = "black", linewidth = 0.6) +
   geom_hline(yintercept = run3_att, linetype = "dashed", color = "black", linewidth = 0.7) +
   geom_hline(yintercept = cem_att,  linetype = "dotted", color = "black", linewidth = 0.7) +
-  annotate("text", x = 0.06, y = run3_att + 0.015,
+  annotate("text", x = 0.30, y = run3_att + 0.015,
            label = sprintf("GenMatch Q1–Q4 ATT = %.3f", run3_att),
            hjust = 0, size = 3.2, fontface = "italic", family = "Times New Roman") +
   annotate("text", x = 0.06, y = cem_att + 0.015,
