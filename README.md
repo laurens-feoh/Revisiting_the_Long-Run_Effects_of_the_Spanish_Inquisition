@@ -49,10 +49,8 @@ XQuartz. If you see `Error: package 'tcltk' could not be loaded`, install
 XQuartz from [xquartz.org](https://www.xquartz.org/), log out and back in,
 and rerun the script.
 
-## Citation
+## Replication Package
 
-If you use this code or data, please cite the original paper:
+Please find the replication package of the original paper through:
 
-Drelichman, M., Vidal-Robert, J., & Voth, H.-J. (2021). The long-run
-effects of religious persecution: Evidence from the Spanish Inquisition.
-*Proc. Natl. Acad. Sci. USA*, 118(22), e2022881118.
+Drelichman, Mauricio, Vidal-Robert, Jordi, and Voth, Hans-Joachim. Replication: The Long Run Effects of Religious Persecution: Evidence from the Spanish Inquisition. Ann Arbor, MI: Inter-university Consortium for Political and Social Research [distributor], 2021-06-26. https://doi.org/10.3886/E143781V1
